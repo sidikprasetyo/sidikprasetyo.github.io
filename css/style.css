@@ -106,3 +106,14 @@ section {
 .laptop-box:hover .laptop-img {
   transform: translate3d(-50%, -49%, 100px) rotate(-10deg) scale(1.2);
 }
+
+.ig-thumbnail {
+  width: 100px;
+  height: 100px;
+  float: left;
+  overflow: hidden;
+}
+
+.ig-thumbnail img {
+  width: 100px;
+}

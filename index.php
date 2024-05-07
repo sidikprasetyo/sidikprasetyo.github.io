@@ -1,3 +1,27 @@
+<?php 
+function get_CURL($url){
+  $curl = curl_init();
+  curl_setopt($curl, CURLOPT_URL, $url);
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  $result = curl_exec($curl);
+  curl_close($curl);
+  
+  return json_decode($result, true);
+}
+
+$result = get_CURL('YOUR_API');
+
+$youtubeProfilePicture = $result['items'][0]['snippet']['thumbnails']['default']['url'];
+$channelName = $result['items'][0]['snippet']['title'];
+$subscriberCount = $result['items'][0]['statistics']['subscriberCount'];
+
+// most view video
+$urlMostViewVideo = 'YOUR_API';
+$result = get_CURL($urlMostViewVideo);
+$mostViewVideo = $result['items'][0]['id']['videoId'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -82,6 +106,39 @@
       </svg>
     </section>
     <!-- Akhir About -->
+
+    <!-- Youtube  -->
+        <section class="sosial" id="sosial">
+          <div class="container mb-5">
+            <div class="row text-center mb-3">
+              <div class="col">
+                <h2>Sosial Media</h2>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-4">
+                <div class="row mt-5">
+                  <div class="col-md-3">
+                    <img src="<?= $youtubeProfilePicture;?>" width="200" class="rounded-circle img-thumbnail">
+                  </div>
+                  <div class="col-md-9">
+                    <h5><?= $channelName;?></h5>
+                    <p><?= $subscriberCount;?> Subscriber.</p>
+                    <div class="g-ytsubscribe" data-channel="GoogleDevelopers" data-layout="default" data-count="default"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row mt-3 pb-3">
+                  <div class="col">
+                  <iframe width="350" height="200" src="https://www.youtube.com/embed/<?= $mostViewVideo;?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
     <!-- Project -->
     <section id="project">
@@ -374,5 +431,6 @@
           .catch((error) => console.error("Error!", error.message));
       });
     </script>
+    <script src="https://apis.google.com/js/platform.js"></script>
   </body>
 </html>
